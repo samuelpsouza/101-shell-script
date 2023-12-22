@@ -20,7 +20,7 @@ ordenar=0		# A saída deverá ser ordenada?
 
 MENSAGEM_USO="
 Uso: $(basename "$0") [-h | -V]
-
+ -s, --sort	Ordena a listagem alfabeticamente
  -h, --help	Mostra esta tela de ajuda e sai
  -V, --version	Mostra a versão do programa e sai
 "
