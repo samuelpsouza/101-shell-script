@@ -7,28 +7,42 @@
 #
 # Versão 1: Mostra usuparios e nomes separados por TAB
 # Versão 2: Adicionado suporte à opção -h
+# Versão 3: Adicionado suporte à opção -V e opções inválidas
 #
 # Aurélio, Novembro de 2007
 #
 
 MENSAGEM_USO="
-Uso: $0 [-h]
+Uso: $0 [-h | -V]
 
  -h	Mostra esta tela de ajuda e sai
+ -V	Mostra a versão do programa e sai
 "
 
 # Tratamento das opções de linha de comando
 
-if test "$1" = "-h"
-then
-   echo "$MENSAGEM_USO"
-   exit 0
-elif test "$1" = "-V"
-then
-   # mostra versão
-   echo "v1.0.1"
-   exit 0
-fi
+case "$1" in
+    -h)
+	echo "$MENSAGEM_USO"
+	exit 0
+    ;;
+
+    -V)
+	# mostra a versão
+	echo "v1.0.2"
+	exit 0
+    ;;
+    
+    *)
+	# opção inválida
+
+	if test -n "$1"
+	then
+	   echo "Opção inválida: $1"
+	   exit 1
+	fi
+    ;;
+esac
 
 # Processamento
 
