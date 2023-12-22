@@ -8,28 +8,33 @@
 # Versão 1: Mostra usuparios e nomes separados por TAB
 # Versão 2: Adicionado suporte à opção -h
 # Versão 3: Adicionado suporte à opção -V e opções inválidas
+# Versão 4: Arrumando bug quando não tem opções, basename no
+#           nome do programa, -V extraindo direto dos cabeçalhos,
+#           adicionadas opções --help e --version
 #
 # Aurélio, Novembro de 2007
 #
 
 MENSAGEM_USO="
-Uso: $0 [-h | -V]
+Uso: $(basename "$0") [-h | -V]
 
- -h	Mostra esta tela de ajuda e sai
- -V	Mostra a versão do programa e sai
+ -h, --help	Mostra esta tela de ajuda e sai
+ -V, --version	Mostra a versão do programa e sai
 "
 
 # Tratamento das opções de linha de comando
 
 case "$1" in
-    -h)
+    -h | --help)
 	echo "$MENSAGEM_USO"
 	exit 0
     ;;
 
-    -V)
+    -V | --version)
 	# mostra a versão
-	echo "v1.0.2"
+	echo -n $(basename "$0")
+	# Extrai a versão diretamente dos cabeçalhos do programa
+	grep '^# Versão ' "$0" | tail -1 | cut -d : -f 1 | tr -d \#
 	exit 0
     ;;
     
