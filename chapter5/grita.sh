@@ -8,7 +8,7 @@
 DEBUG=1					# Debug: 0 desliga, 1 liga
 
 Debug(){
-  [ "$DEBUG" = 1 ] && echo "$*"
+  [ "$DEBUG" = 1 ] && echo -e "\033[33;1m$*\033[m"
 }
 
 TXT="gritaria"
