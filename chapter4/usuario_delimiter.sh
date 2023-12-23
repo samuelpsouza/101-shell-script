@@ -14,6 +14,8 @@
 # Versão 5: Adicionadas opções -s e --sort
 # Versão 6: Adicionadas opções -r, --reverse, -u, --uppercase,
 #           leitura de múltiplas opções (loop)
+# Versão 7: Melhorias no código para que fique mais legível,
+#           adicionadas opções -d e --delimiter
 #
 # Aurélio, Novembro de 2007
 #
@@ -21,17 +23,19 @@
 ordenar=0		# A saída deverá ser ordenada?
 inverter=0		# A saída deverá ser invertida?
 maiusculas=0		# A saída deverá ser em maiúsculas?
+delim='\t'		# Caractere usado como delimitador de saída
 
 MENSAGEM_USO="
 Uso: $(basename "$0") [OPÇÕES]
 
 OPÇÕES:
+ -d, --delimiter C	Usa o caracter C como delimitador
  -r, --reverse  	Inverte a listagem
  -s, --sort		Ordena a listagem alfabeticamente
  -u, --uppercase	Mostra a listagem em MAIÚSCULAS
 
- -h, --help	Mostra esta tela de ajuda e sai
- -V, --version	Mostra a versão do programa e sai
+ -h, --help		Mostra esta tela de ajuda e sai
+ -V, --version		Mostra a versão do programa e sai
 "
 
 # Tratamento das opções de linha de comando
@@ -52,6 +56,17 @@ do
 	exit 0
     ;;
     
+    -d | --delimiter)
+	shift
+	delim="$1"
+
+	if test -z "$delim"
+	then
+	   echo "Faltou o argumento para a -d"
+	   exit 1
+	fi
+    ;;
+
     # Opções que ligam/desligam chaves
 
     -s | --sort      ) ordenar=1   ;;
@@ -86,5 +101,5 @@ test "$maiusculas" = 1 && lista=$(echo "$lista" | tr a-z A-Z)
 
 # Mostrar resultado para o usuário
 
-echo "$lista" | tr : \\t
+echo "$lista" | tr : "$delim"
 
